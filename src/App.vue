@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf" :class="isDarkMode ? 'bg-grey-9 App' : 'bg-grey-1 App'">
+  <q-layout view="hHh lpR fFf" :class="isDarkMode ? 'bg-grey-9 App' : 'bg-grey-2 App'">
     <q-header
       elevated
       :class="isDarkMode ? 'bg-grey-10 text-light-green-4' : 'bg-white text-light-green-8'"
@@ -45,8 +45,10 @@
         <q-list padding class="text-grey-8">
           <q-item
             v-ripple
-            v-for="link in links1"
+            v-for="link in mainLinks"
             :key="link.text"
+            :active="RegExp(link.path).test(route.path)"
+            @click="handleClickItem(link.path)"
             clickable
           >
             <q-item-section avatar>
@@ -58,12 +60,28 @@
           </q-item>
 
           <q-separator inset class="q-my-sm" />
+
+          <q-item
+            v-ripple
+            v-for="link in otherLinks"
+            :key="link.text"
+            :active="RegExp(link.path).test(route.path)"
+            @click="handleClickItem(link.path)"
+            clickable
+          >
+            <q-item-section avatar>
+              <q-icon :name="link.icon" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{ link.text }}</q-item-label>
+            </q-item-section>
+          </q-item>
         </q-list>
       </q-scroll-area>
     </q-drawer>
 
     <q-page-container>
-      Content
+      <router-view />
     </q-page-container>
   </q-layout>
 </template>
@@ -71,11 +89,14 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
+import { useRouter, useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'Layout',
   setup () {
     const $q = useQuasar()
+    const router = useRouter()
+    const route = useRoute()
     // left drawer toggle
     const leftDrawerOpen = ref(false)
     const toggleLeftDrawer = () => {
@@ -88,23 +109,52 @@ export default defineComponent({
       $q.dark.toggle()
     })
 
+    // click q-list item
+    const handleClickItem = (path: string) => {
+      router.push({ path })
+    }
+
     return {
+      route,
       leftDrawerOpen,
       isDarkMode,
       toggleLeftDrawer,
-      links1: [
-        { icon: 'web', text: 'Menu' },
-        { icon: 'web', text: 'Menu' },
-        { icon: 'web', text: 'Menu' },
-        { icon: 'web', text: 'Menu' }
+      handleClickItem,
+      mainLinks: [
+        { icon: 'dashboard', text: 'Calorie Calculator', path: '/calc' },
+        { icon: 'web', text: 'Menu', path: '/calc' },
+        { icon: 'web', text: 'Menu', path: '/calc' }
+      ],
+      otherLinks: [
+        { icon: 'person', text: 'About Us', path: '/about' }
       ]
     }
   }
 })
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 .App
   &-toolbar
     height: 64px
+
+::-webkit-scrollbar
+  width: 6px
+::-webkit-scrollbar-track
+  border-radius: 5px
+  background-color: #eee
+::-webkit-scrollbar-thumb
+  border-radius: 2px
+  background-color: $primary
+
+#nprogress .bar
+  z-index: 10000 !important
+  background: $primary !important
+
+#nprogress .spinner
+  z-index: 10000 !important
+
+#nprogress .spinner-icon
+  border-top-color: $primary !important
+  border-left-color: $primary !important
 </style>

@@ -12,5 +12,12 @@ export default defineConfig({
     quasar({
       sassVariables: 'src/quasar-variables.sass'
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      '@': '/src/',
+      '@components': '/src/components/',
+      '@views': '/src/views/'
+    }
+  }
 })
