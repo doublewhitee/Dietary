@@ -1,35 +1,35 @@
 <template>
   <div :class="$q.dark.isActive ? 'calc-container text-grey-4' : 'calc-container text-grey-8'">
     <div class="calc-content">
-      <q-card flat :class="$q.dark.isActive ? 'bg-grey-8 q-ma-md' : 'bg-white q-ma-md'">
-        <q-card-section>
-          <div class="row justify-center items-center">
-            <div class="col-3 calc-card-info">
-              <div>Intake</div>
-              <div class="calc-card-info-detail">0</div>
+      <q-scroll-area class="fit">
+        <q-card flat :class="$q.dark.isActive ? 'bg-grey-8 q-ma-md' : 'bg-white q-ma-md'">
+          <q-card-section>
+            <div class="row justify-center items-center">
+              <div class="col-3 calc-card-info">
+                <div>Intake</div>
+                <div class="calc-card-info-detail">0</div>
+              </div>
+              <q-circular-progress
+                :value="calorieValue"
+                size="90px"
+                :thickness="0.2"
+                color="light-green"
+                track-color="grey-3"
+                class="text-light-green q-ma-md col-4 col-md-3"
+              />
+              <div class="col-3 calc-card-info">
+                <div>Consumption</div>
+                <div class="calc-card-info-detail">0</div>
+              </div>
             </div>
-            <q-knob
-              readonly
-              v-model="calorieValue"
-              show-value
-              size="90px"
-              :thickness="0.2"
-              color="light-green"
-              track-color="grey-4"
-              class="text-light-green q-ma-md col-4 col-md-3"
-            />
-            <div class="col-3 calc-card-info">
-              <div>Consumption</div>
-              <div class="calc-card-info-detail">0</div>
-            </div>
-          </div>
-        </q-card-section>
-      </q-card>
+          </q-card-section>
+        </q-card>
 
-      <Empty />
-      <div class="row justify-center q-my-md">
-        <q-btn unelevated rounded color="primary" label="Diet Analysis" />
-      </div>
+        <Empty />
+        <div class="row justify-center q-my-md">
+          <q-btn unelevated rounded color="primary" label="Diet Analysis" />
+        </div>
+      </q-scroll-area>
     </div>
     <BottomBar />
   </div>

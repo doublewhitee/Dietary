@@ -16,7 +16,7 @@ const router = createRouter({
     },
     {
       path: '/calc-search',
-      name: 'Foods',
+      name: 'Add',
       component: () => import('@views/Search.vue')
     },
     {

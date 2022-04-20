@@ -1,5 +1,5 @@
 {
-  "name": "vue-coursework",
+  "name": "dietary",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -10,6 +10,7 @@
   "dependencies": {
     "@quasar/extras": "^1.13.5",
     "@types/nprogress": "^0.2.0",
+    "axios": "^0.26.1",
     "nprogress": "^0.2.0",
     "quasar": "^2.6.6",
     "vue": "^3.2.25",

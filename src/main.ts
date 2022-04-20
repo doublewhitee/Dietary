@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { Quasar } from 'quasar'
+import { Quasar, Loading, Notify } from 'quasar'
 import router from './router'
 
 // Import icon libraries
@@ -15,7 +15,14 @@ import App from './App.vue'
 const myApp = createApp(App)
 
 myApp.use(Quasar, {
-  plugins: {}, // import Quasar plugins and add here
+  plugins: {
+    Loading,
+    Notify
+  }, // import Quasar plugins and add here
+  config: {
+    loading: {},
+    notify: {}
+  }
 })
 
 myApp.use(router)

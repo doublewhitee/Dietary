@@ -17,7 +17,8 @@
         />
 
         <q-toolbar-title v-if="$q.screen.gt.xs" shrink class="row items-center no-wrap">
-          <span class="q-ml-sm">Logo</span>
+          <img src="@/assets/logo.png" alt="logo" class="App-logo">
+          <span class="q-ml-sm">Dietary</span>
         </q-toolbar-title>
 
         <q-space />
@@ -137,15 +138,9 @@ export default defineComponent({
 .App
   &-toolbar
     height: 64px
-
-::-webkit-scrollbar
-  width: 6px
-::-webkit-scrollbar-track
-  border-radius: 5px
-  background-color: #eee
-::-webkit-scrollbar-thumb
-  border-radius: 2px
-  background-color: $primary
+  &-logo
+    height: 35px
+    width: 35px
 
 #nprogress .bar
   z-index: 10000 !important
