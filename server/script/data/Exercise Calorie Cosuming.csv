@@ -1,0 +1,245 @@
+"Activity, Exercise or Sport ",Unit,Calories per kg per min
+"Cycling, mountain bike, bmx",hour,0.141824694
+"Cycling, <10 mph, leisure bicycling",hour,0.066686458
+"Cycling, >20 mph, racing",hour,0.26690917
+"Cycling, 10-11.9 mph, light",hour,0.100033802
+"Cycling, 12-13.9 mph, moderate",hour,0.13347699
+"Cycling, 14-15.9 mph, vigorous",hour,0.166824335
+"Cycling, 16-19 mph, very fast, racing",hour,0.200163448
+Unicycling,hour,0.083415279
+"Stationary cycling, very light",hour,0.050016901
+"Stationary cycling, light",hour,0.091756759
+"Stationary cycling, moderate",hour,0.116762624
+"Stationary cycling, vigorous",hour,0.175172039
+"Stationary cycling, very vigorous",hour,0.208570417
+"Circuit training, minimal rest",hour,0.13347699
+"Weight lifting, body building, vigorous",hour,0.100033802
+"Weight lifting, light workout",hour,0.050016901
+Health club exercise,hour,0.091756759
+Stair machine,hour,0.150095513
+"Rowing machine, light",hour,0.058409415
+"Rowing machine, moderate",hour,0.116762624
+"Rowing machine, vigorous",hour,0.141824694
+"Rowing machine, very vigorous",hour,0.200163448
+Ski machine,hour,0.116762624
+"Aerobics, low impact",hour,0.083415279
+"Aerobics, high impact",hour,0.116762624
+"Aerobics, step aerobics",hour,0.141824694
+"Aerobics, general",hour,0.108426316
+Jazzercise,hour,0.100033802
+"Stretching, hatha yoga",hour,0.066686458
+Mild stretching,hour,0.041739858
+Instructing aerobic class,hour,0.100033802
+Water aerobics,hour,0.066686458
+"Ballet, twist, jazz, tap",hour,0.075138236
+"Ballroom dancing, slow",hour,0.050016901
+"Ballroom dancing, fast",hour,0.091756759
+"Running, 5 mph (12 minute mile)",hour,0.13347699
+"Running, 5.2 mph (11.5 minute mile)",hour,0.150095513
+"Running, 6 mph (10 min mile)",hour,0.166824335
+"Running, 6.7 mph (9 min mile)",hour,0.183493891
+"Running, 7 mph (8.5 min mile)",hour,0.191841595
+"Running, 7.5mph (8 min mile)",hour,0.208570417
+"Running, 8 mph (7.5 min mile)",hour,0.22518894
+"Running, 8.6 mph (7 min mile)",hour,0.233510792
+"Running, 9 mph (6.5 min mile)",hour,0.250239614
+"Running, 10 mph (6 min mile)",hour,0.26690917
+"Running, 10.9 mph (5.5 min mile)",hour,0.300256515
+"Running, cross country",hour,0.150095513
+"Running, general",hour,0.13347699
+"Running, on a track, team practice",hour,0.166824335
+"Running, stairs, up",hour,0.250239614
+"Track and field (shot, discus)",hour,0.066686458
+"Track and field (high jump, pole vault)",hour,0.100033802
+Track and field (hurdles),hour,0.166824335
+Archery,hour,0.058409415
+Badminton,hour,0.075138236
+"Basketball game, competitive",hour,0.13347699
+"Playing basketball, non game",hour,0.100033802
+"Basketball, officiating",hour,0.116762624
+"Basketball, shooting baskets",hour,0.075138236
+"Basketball, wheelchair",hour,0.108426316
+"Running, training, pushing wheelchair",hour,0.13347699
+Billiards,hour,0.041739858
+Bowling,hour,0.050016901
+"Boxing, in ring",hour,0.200163448
+"Boxing, punching bag",hour,0.100033802
+"Boxing, sparring",hour,0.150095513
+Croquet,hour,0.041739858
+Curling,hour,0.066686458
+Darts (wall or lawn),hour,0.041739858
+Fencing,hour,0.100033802
+"Football, competitive",hour,0.150095513
+"Football, touch, flag, general",hour,0.13347699
+"Football or baseball, playing catch",hour,0.041739858
+"Frisbee playing, general",hour,0.050016901
+"Frisbee, ultimate frisbee",hour,0.13347699
+"Golf, general",hour,0.075138236
+"Golf, walking and carrying clubs",hour,0.075138236
+"Golf, driving range",hour,0.050016901
+"Golf, miniature golf",hour,0.050016901
+"Golf, walking and pulling clubs",hour,0.071741649
+"Golf, using power cart",hour,0.058409415
+Gymnastics,hour,0.066686458
+Hacky sack,hour,0.066686458
+Handball,hour,0.200163448
+"Handball, team",hour,0.13347699
+"Hockey, field hockey",hour,0.13347699
+"Hockey, ice hockey",hour,0.13347699
+"Riding a horse, general",hour,0.066686458
+"Horesback riding, saddling horse",hour,0.058409415
+"Horseback riding, grooming horse",hour,0.058409415
+"Horseback riding, trotting",hour,0.108426316
+"Horseback riding, walking",hour,0.041739858
+"Horse racing, galloping",hour,0.13347699
+"Horse grooming, moderate",hour,0.100033802
+Horseshoe pitching,hour,0.050016901
+Jai alai,hour,0.200163448
+"Martial arts, judo, karate, jujitsu",hour,0.166824335
+"Martial arts, kick boxing",hour,0.166824335
+"Martial arts, tae kwan do",hour,0.166824335
+Krav maga training,hour,0.166824335
+Juggling,hour,0.066686458
+Kickball,hour,0.116762624
+Lacrosse,hour,0.13347699
+Orienteering,hour,0.150095513
+Playing paddleball,hour,0.100033802
+"Paddleball, competitive",hour,0.166824335
+Polo,hour,0.13347699
+"Racquetball, competitive",hour,0.166824335
+Playing racquetball,hour,0.116762624
+"Rock climbing, ascending rock",hour,0.183493891
+"Rock climbing, rappelling",hour,0.13347699
+"Jumping rope, fast",hour,0.200163448
+"Jumping rope, moderate",hour,0.166824335
+"Jumping rope, slow",hour,0.13347699
+Rugby,hour,0.166824335
+"Shuffleboard, lawn bowling",hour,0.050016901
+Skateboarding,hour,0.083415279
+Roller skating,hour,0.116762624
+"Roller blading, in-line skating",hour,0.200163448
+Sky diving,hour,0.050016901
+"Soccer, competitive",hour,0.166824335
+Playing soccer,hour,0.116762624
+Softball or baseball,hour,0.083415279
+"Softball, officiating",hour,0.066686458
+"Softball, pitching",hour,0.100033802
+Squash,hour,0.200163448
+"Table tennis, ping pong",hour,0.066686458
+Tai chi,hour,0.066686458
+Playing tennis,hour,0.116762624
+"Tennis, doubles",hour,0.100033802
+"Tennis, singles",hour,0.13347699
+Trampoline,hour,0.058409415
+"Volleyball, competitive",hour,0.13347699
+Playing volleyball,hour,0.050016901
+"Volleyball, beach",hour,0.13347699
+Wrestling,hour,0.100033802
+Wallyball,hour,0.116762624
+"Backpacking, Hiking with pack",hour,0.116762624
+"Carrying infant, level ground",hour,0.058409415
+"Carrying infant, upstairs",hour,0.083415279
+"Carrying 16 to 24 lbs, upstairs",hour,0.100033802
+"Carrying 25 to 49 lbs, upstairs",hour,0.13347699
+"Standing, playing with children, light",hour,0.046716157
+"Walk/run, playing with children, moderate",hour,0.066686458
+"Walk/run, playing with children, vigorous",hour,0.083415279
+Carrying small children,hour,0.050016901
+"Loading, unloading car",hour,0.050016901
+"Climbing hills, carrying up to 9 lbs",hour,0.116762624
+"Climbing hills, carrying 10 to 20 lb",hour,0.125155137
+"Climbing hills, carrying 21 to 42 lb",hour,0.13347699
+"Climbing hills, carrying over 42 lb",hour,0.150095513
+Walking downstairs,hour,0.050016901
+"Hiking, cross country",hour,0.100033802
+Bird watching,hour,0.041739858
+"Marching, rapidly, military",hour,0.108426316
+"Children's games, hopscotch, dodgeball",hour,0.083415279
+Pushing stroller or walking with children,hour,0.041739858
+Pushing a wheelchair,hour,0.066686458
+Race walking,hour,0.108426316
+"Rock climbing, mountain climbing",hour,0.13347699
+Walking using crutches,hour,0.083415279
+Walking the dog,hour,0.050016901
+"Walking, under 2.0 mph, very slow",hour,0.033347345
+"Walking 2.0 mph, slow",hour,0.041739858
+Walking 2.5 mph,hour,0.050016901
+"Walking 3.0 mph, moderate",hour,0.055063861
+"Walking 3.5 mph, brisk pace",hour,0.063385713
+"Walking 3.5 mph, uphill",hour,0.100033802
+"Walking 4.0 mph, very brisk",hour,0.083415279
+Walking 4.5 mph,hour,0.105080762
+Walking 5.0 mph,hour,0.13347699
+"Boating, power, speed boat",hour,0.041739858
+"Canoeing, camping trip",hour,0.066686458
+"Canoeing, rowing, light",hour,0.050016901
+"Canoeing, rowing, moderate",hour,0.116762624
+"Canoeing, rowing, vigorous",hour,0.200163448
+"Crew, sculling, rowing, competition",hour,0.200163448
+Kayaking,hour,0.083415279
+Paddle boat,hour,0.066686458
+"Windsurfing, sailing",hour,0.050016901
+"Sailing, competition",hour,0.083415279
+"Sailing, yachting, ocean sailing",hour,0.050016901
+"Skiing, water skiing",hour,0.100033802
+Ski mobiling,hour,0.116762624
+"Skin diving, fast",hour,0.26690917
+"Skin diving, moderate",hour,0.208570417
+"Skin diving, scuba diving",hour,0.116762624
+Snorkeling,hour,0.083415279
+"Surfing, body surfing or board surfing",hour,0.050016901
+"Whitewater rafting, kayaking, canoeing",hour,0.083415279
+"Swimming laps, freestyle, fast",hour,0.166824335
+"Swimming laps, freestyle, slow",hour,0.116762624
+Swimming backstroke,hour,0.116762624
+Swimming breaststroke,hour,0.166824335
+Swimming butterfly,hour,0.183493891
+"Swimming leisurely, not laps",hour,0.100033802
+Swimming sidestroke,hour,0.13347699
+Swimming synchronized,hour,0.13347699
+"Swimming, treading water, fast, vigorous",hour,0.166824335
+"Swimming, treading water, moderate",hour,0.066686458
+"Water aerobics, water calisthenics",hour,0.066686458
+Water polo,hour,0.166824335
+Water volleyball,hour,0.050016901
+Water jogging,hour,0.13347699
+"Diving, springboard or platform",hour,0.050016901
+"Ice skating, < 9 mph",hour,0.091756759
+"Ice skating, average speed",hour,0.116762624
+"Ice skating, rapidly",hour,0.150095513
+"Speed skating, ice, competitive",hour,0.250239614
+"Cross country snow skiing, slow",hour,0.116762624
+"Cross country skiing, moderate",hour,0.13347699
+"Cross country skiing, vigorous",hour,0.150095513
+"Cross country skiing, racing",hour,0.233510792
+"Cross country skiing, uphill",hour,0.275250651
+"Snow skiing, downhill skiing, light",hour,0.083415279
+"Downhill snow skiing, moderate",hour,0.100033802
+"Downhill snow skiing, racing",hour,0.13347699
+"Sledding, tobagganing, luge",hour,0.116762624
+Snow shoeing,hour,0.13347699
+Snowmobiling,hour,0.058409415
+General housework,hour,0.058409415
+Cleaning gutters,hour,0.083415279
+Painting,hour,0.075138236
+"Sit, playing with animals",hour,0.041739858
+"Walk / run, playing with animals",hour,0.066686458
+Bathing dog,hour,0.058409415
+"Mowing lawn, walk, power mower",hour,0.091756759
+"Mowing lawn, riding mower",hour,0.041739858
+"Walking, snow blower",hour,0.058409415
+"Riding, snow blower",hour,0.050016901
+Shoveling snow by hand,hour,0.100033802
+Raking lawn,hour,0.071741649
+"Gardening, general",hour,0.066686458
+"Bagging grass, leaves",hour,0.066686458
+Watering lawn or garden,hour,0.025121335
+"Weeding, cultivating garden",hour,0.075138236
+"Carpentry, general",hour,0.058409415
+Carrying heavy loads,hour,0.13347699
+Carrying moderate loads upstairs,hour,0.13347699
+General cleaning,hour,0.058409415
+"Cleaning, dusting",hour,0.041739858
+Taking out trash,hour,0.050016901
+"Walking, pushing a wheelchair",hour,0.066686458
+"Teach physical education,exercise class",hour,0.066686458
