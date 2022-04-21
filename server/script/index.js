@@ -7,6 +7,7 @@ const url = 'mongodb://localhost:27017/calorie'
 
 const Category = require('../models/category')
 const Food = require('../models/food')
+const Sport = require('../models/sport')
 
 // read File [Diet Nutritional Data]
 // insert Category func
@@ -42,7 +43,7 @@ const getFood = async () => {
     for (let item of res) {
       const temp = { nutrition: [] }
       for (let key of Object.keys(item)) {
-        if (key === 'name') {
+        if (key === 'Name') {
           temp.name = item[key]
         } else if (key === 'Category') {
           const cate_id = cates.find(i => {
@@ -68,6 +69,22 @@ const getFood = async () => {
     console.log('Food insert error!')
   }
 }
+
+// insert Sport func
+const getSport = async () => {
+  try {
+    const res = await csv().fromFile(path.join(__dirname, '/data/Exercise Calorie Cosuming.csv'))
+    const insertData = []
+    res.forEach(i => {
+      insertData.push({ name: i['Activity, Exercise or Sport'], calorie: i['Calories per kg per min'] })
+    })
+    await Sport.insertMany(insertData)
+    console.log('Sport inserted successfully!')
+  } catch (e) {
+    console.log('Sport insert error!')
+  }
+}
+
 // connect
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 const conn = mongoose.connection
@@ -75,6 +92,7 @@ conn.on('open', async () => {
   console.log('DB connect success!')
   await getCate()
   await getFood()
+  await getSport()
   console.log('Done!')
   mongoose.disconnect()
 })
