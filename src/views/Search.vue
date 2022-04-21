@@ -25,13 +25,16 @@
             >
               <q-item-section>
                 <q-item-label>{{ item.name }}</q-item-label>
-                <q-item-label caption>{{ item.category.name }}</q-item-label>
+                <q-item-label caption>{{ item.category ? item.category.name : 'Sport' }}</q-item-label>
               </q-item-section>
 
               <q-item-section side top>
                 <q-item-label caption>
-                  <span class="text-light-green-6">{{ parseInt(item.calorie * 100) }}</span>
-                  kcal / 100{{ item.unit }}
+                  <span class="text-light-green-6">
+                    <!-- todo: Add kg -->
+                    {{ item.category ? Math.floor(item.calorie * 100) : Math.floor(item.calorie * 60) }}
+                  </span>
+                  kcal /{{ item.unit ? ' 100 ' + item.unit : ' hour' }}
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -58,8 +61,10 @@
         'border-top: 1px solid rgba(0, 0, 0, 0.12)'"
     >
       <div class="col-2">
-        <q-btn dense round flat icon="shopping_bag">
-          <q-badge floating>4</q-badge>
+        <q-btn dense round flat icon="shopping_bag" @click="cartVisible = true">
+          <q-badge v-if="calcCart[route.query.type].length > 0" floating>
+            {{ calcCart[route.query.type].length }}
+          </q-badge>
         </q-btn>
       </div>
       <div class="col-10">
@@ -75,8 +80,8 @@
     </div>
   </div>
 
-  <q-dialog v-model="dialogVisible" persistent>
-    <q-card>
+  <q-dialog v-model="dialogVisible">
+    <q-card  style="width: 500px; max-width: 80vw;">
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">
           {{ state.dialogInfo.name }}
@@ -84,14 +89,13 @@
             {{ state.dialogInfo.category.name }}
           </q-badge>
         </div>
-        <q-space />
-        <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
 
       <q-card-section class="q-pt-none">
         <span class="text-light-green-6">
-          {{ parseInt(state.dialogInfo.calorie * 100) }}
-        </span>{{ ` kcal / 100 ${state.dialogInfo.unit}` }}
+          <!-- todo: Add kg -->
+          {{ state.dialogInfo.unit ? Math.floor(state.dialogInfo.calorie * 100) : Math.floor(state.dialogInfo.calorie * 60) }}
+        </span>{{ state.dialogInfo.unit ? ` kcal / 100 ${state.dialogInfo.unit}` : ` kcal / hour` }}
       </q-card-section>
 
       <q-card-section>
@@ -104,9 +108,11 @@
           mask="#"
           fill-mask="0"
           reverse-fill-mask
-          :suffix="state.dialogInfo.unit"
-          :rules="[ val => val < 9999 || 'The value must less than 10000']"
-          style="width: 300px"
+          :suffix="state.dialogInfo.unit ? state.dialogInfo.unit : 'min'"
+          :rules="state.dialogInfo.unit ?
+            [ val => val < 9999 || 'The value must less than 10000'] :
+            [val => val < 999 || 'The value must less than 1000']"
+          style="width: 100%;"
         />
       </q-card-section>
 
@@ -115,19 +121,86 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+
+  <q-dialog v-model="cartVisible">
+    <q-card style="width: 700px; max-width: 80vw;">
+      <q-card-section class="row items-center q-pb-none">
+        <div class="text-h6">{{ route.query.type }}</div>
+        <q-space />
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        <q-scroll-area style="height: 340px">
+          <div
+            v-if="calcCart[route.query.type].length === 0"
+            class="row justify-center items-center"
+            style="height: 300px"
+          >
+            <Empty />
+          </div>
+          <q-list>
+            <q-item
+              clickable
+              v-ripple
+              v-for="item in calcCart[route.query.type]"
+              :key="item.name"
+            >
+              <q-item-section>
+                <q-item-label>{{ item.name }}</q-item-label>
+                <q-item-label caption>
+                  {{ item.count + ' '}} {{ item.unit ? item.unit : 'min' }}
+                </q-item-label>
+                <q-item-label caption>
+                  <span class="text-light-green-6">
+                    <!-- todo -->
+                    {{ Math.floor(item.calorie * item.count) + ' ' }}
+                  </span>kcal
+                </q-item-label>
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label class="row justify-end">
+                  <q-btn
+                    flat
+                    label="Edit"
+                    class="col-5 col-md-3"
+                    size="xs"
+                    @click="handleClickItem(item)"
+                  />
+                  <q-btn
+                    flat
+                    label="Delete"
+                    class="col-5 col-md-3"
+                    size="xs"
+                    text-color="red-5"
+                    @click="handleDeleteCart(item)"
+                  />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-scroll-area>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, ref, watch } from 'vue'
+import { defineComponent, onMounted, reactive, ref, watch, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useStore } from 'vuex'
+import { useQuasar } from 'quasar'
 
 import Empty from '@components/Empty.vue'
 
 import { getFoodInfo } from '../request/food'
+import { getSportInfo } from '../request/sport'
 
 interface ItemInfo {
   _id: string
   name: string
+  count?: number
   category?: {
     _id: string
     name: string
@@ -152,6 +225,10 @@ export default defineComponent({
 
     const router = useRouter()
     const route = useRoute()
+    const store = useStore()
+    const $q = useQuasar()
+
+    const calcCart = computed(() => store.state.calcCart)
 
     const isLoadedAll = ref(false)
     const state = reactive({
@@ -190,8 +267,13 @@ export default defineComponent({
           }
         } else {
           // sport data
-          console.log('------')
-          isLoadedAll.value = true
+          const res = await getSportInfo(keyword, page)
+          if (res) {
+            if (res.data.length < 20) {
+              isLoadedAll.value = true
+            }
+            state.dataList.push(...res.data)
+          }
         }
       }
     }
@@ -211,12 +293,27 @@ export default defineComponent({
     const handleClickItem = (info: ItemInfo) => {
       state.dialogInfo = info
       dialogVisible.value = true
+      // add count
       itemInputNumber.value = 0
+      calcCart.value[route.query.type as string].some((k: ItemInfo) => {
+        if (k._id === state.dialogInfo._id) {
+          itemInputNumber.value = k.count ? k.count : 0 
+          return true
+        }
+        return false
+      })
     }
     
     const handleCloseDialog = () => {
+      // validate
       if (dialogInputRef.value.validate()) {
         dialogVisible.value = false
+        if (state.dialogInfo.count || itemInputNumber.value > 0) {
+          store.dispatch('ASYNC_ADD_CART', {
+            type: route.query.type,
+            data: { ...state.dialogInfo, count: itemInputNumber.value }
+          })
+        }
       }
     }
 
@@ -228,6 +325,21 @@ export default defineComponent({
         itemInputNumber.value = 0
       }
     })
+
+    // cart dialog visible
+    const cartVisible = ref(false)
+    const handleDeleteCart = (item: ItemInfo) => {
+      $q.dialog({
+        title: 'Confirm',
+        message: `Are you sure to delete ${item.name}?`,
+        cancel: true,
+      }).onOk(() => {
+        store.dispatch('ASYNC_DELETE_CART', {
+          type: route.query.type,
+          data: item
+        })
+      })
+    }
 
     return {
       route,
@@ -242,7 +354,10 @@ export default defineComponent({
       handleClickItem,
       handleCloseDialog,
       dialogInputRef,
-      itemInputNumber
+      itemInputNumber,
+      cartVisible,
+      calcCart,
+      handleDeleteCart
     }
   }
 })
