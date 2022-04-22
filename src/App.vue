@@ -123,11 +123,12 @@ export default defineComponent({
       handleClickItem,
       mainLinks: [
         { icon: 'dashboard', text: 'Calorie Calculator', path: '/calc' },
-        { icon: 'web', text: 'Menu', path: '/calc' },
-        { icon: 'web', text: 'Menu', path: '/calc' }
+        { icon: 'web', text: 'Food Calorie Search', path: '/calc' },
+        { icon: 'insights', text: 'Menu', path: '/calc' }
       ],
       otherLinks: [
-        { icon: 'person', text: 'About Us', path: '/about' }
+        { icon: 'person', text: 'User Info', path: '/about' },
+        { icon: 'lightbulb', text: 'About Us', path: '/about' }
       ]
     }
   }
@@ -141,6 +142,10 @@ export default defineComponent({
   &-logo
     height: 35px
     width: 35px
+
+::selection
+  background: $primary
+  color: #FFF
 
 #nprogress .bar
   z-index: 10000 !important

@@ -2,6 +2,8 @@ import { createApp } from 'vue'
 import { Quasar, Loading, Notify, Dialog } from 'quasar'
 import router from './router'
 import store from './store'
+import 'echarts'
+import VueECharts from 'vue-echarts'
 
 // Import icon libraries
 import '@quasar/extras/material-icons/material-icons.css'
@@ -29,6 +31,7 @@ myApp.use(Quasar, {
 
 myApp.use(router)
 myApp.use(store)
+myApp.component('v-chart', VueECharts)
 
 // Assumes you have a <div id="app"></div> in your index.html
 myApp.mount('#app')

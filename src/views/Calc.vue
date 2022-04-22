@@ -44,7 +44,7 @@
             </div>
 
             <div class="row">
-              <div class="col-12 calc-info">
+              <div class="col-12 text-right text-caption">
                 In order to get more accurate data, click 
                 <a class="calc-link text-light-green-8">here</a>
                 to set your basic information
@@ -142,6 +142,7 @@
             :disabled="calcCart.Breakfast.length === 0 &&
               calcCart.Lunch.length === 0 &&
               calcCart.Dinner.length === 0"
+            @click="handleClickDietAnalysis"
           />
         </div>
       </q-scroll-area>
@@ -153,6 +154,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import BottomBar from '@components/BottomBar.vue'
 import Empty from '@components/Empty.vue'
 
@@ -176,6 +178,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
 
     const calcCart = computed(() => store.state.calcCart)
     // intake & consumption
@@ -200,12 +203,17 @@ export default defineComponent({
 
     // target calories
     const target = ref(1000)
+    // click Diet Analysis button
+    const handleClickDietAnalysis = () => {
+      router.push({ path: '/calc-analysis' })
+    }
 
     return {
       calcCart,
       intake,
       consumption,
-      target
+      target,
+      handleClickDietAnalysis
     }
   }
 })
@@ -237,7 +245,6 @@ export default defineComponent({
       font-weight: bold
   &-info
     font-size: 12px
-    text-align: right
   &-link
     cursor: pointer
 </style>
