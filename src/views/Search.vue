@@ -3,7 +3,7 @@
     <q-input
       outlined
       v-model="keyword"
-      :label="`Search ${route.query.type}`"
+      :label="`Search ${type}`"
       debounce="500"
       class="q-pa-md"
     >
@@ -31,8 +31,7 @@
               <q-item-section side top>
                 <q-item-label caption>
                   <span class="text-light-green-6">
-                    <!-- todo: Add kg -->
-                    {{ item.category ? Math.floor(item.calorie * 100) : Math.floor(item.calorie * 60) }}
+                    {{ item.category ? Math.floor(item.calorie * 100) : Math.floor(item.calorie * 60 * user.basicInfo.weight) }}
                   </span>
                   kcal /{{ item.unit ? ' 100 ' + item.unit : ' hour' }}
                 </q-item-label>
@@ -62,8 +61,8 @@
     >
       <div class="col-2">
         <q-btn dense round flat icon="shopping_bag" @click="cartVisible = true">
-          <q-badge v-if="calcCart[route.query.type].length > 0" floating>
-            {{ calcCart[route.query.type].length }}
+          <q-badge v-if="calcCart[type].length > 0" floating>
+            {{ calcCart[type].length }}
           </q-badge>
         </q-btn>
       </div>
@@ -93,8 +92,7 @@
 
       <q-card-section class="q-pt-none">
         <span class="text-light-green-6">
-          <!-- todo: Add kg -->
-          {{ state.dialogInfo.unit ? Math.floor(state.dialogInfo.calorie * 100) : Math.floor(state.dialogInfo.calorie * 60) }}
+          {{ state.dialogInfo.unit ? Math.floor(state.dialogInfo.calorie * 100) : Math.floor(state.dialogInfo.calorie * 60 * user.basicInfo.weight) }}
         </span>{{ state.dialogInfo.unit ? ` kcal / 100 ${state.dialogInfo.unit}` : ` kcal / hour` }}
       </q-card-section>
 
@@ -125,7 +123,7 @@
   <q-dialog v-model="cartVisible">
     <q-card style="width: 700px; max-width: 80vw;">
       <q-card-section class="row items-center q-pb-none">
-        <div class="text-h6">{{ route.query.type }}</div>
+        <div class="text-h6">{{ type }}</div>
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
@@ -133,7 +131,7 @@
       <q-card-section class="q-pt-none">
         <q-scroll-area style="height: 340px">
           <div
-            v-if="calcCart[route.query.type].length === 0"
+            v-if="calcCart[type].length === 0"
             class="row justify-center items-center"
             style="height: 300px"
           >
@@ -143,7 +141,7 @@
             <q-item
               clickable
               v-ripple
-              v-for="item in calcCart[route.query.type]"
+              v-for="item in calcCart[type]"
               :key="item.name"
             >
               <q-item-section>
@@ -153,8 +151,7 @@
                 </q-item-label>
                 <q-item-label caption>
                   <span class="text-light-green-6">
-                    <!-- todo -->
-                    {{ Math.floor(item.calorie * item.count) + ' ' }}
+                    {{ item.unit ? Math.floor(item.calorie * item.count) + ' ' : Math.floor(item.calorie * item.count * user.basicInfo.weight) + ' ' }}
                   </span>kcal
                 </q-item-label>
               </q-item-section>
@@ -220,6 +217,8 @@ export default defineComponent({
         !route.query.type ||
         !['Breakfast', 'Lunch', 'Dinner', 'Sport'].includes(route.query.type as string)) {
         router.go(-1)
+      } else {
+        type.value = route.query.type as string
       }
     })
 
@@ -229,6 +228,8 @@ export default defineComponent({
     const $q = useQuasar()
 
     const calcCart = computed(() => store.state.calcCart)
+    const user = computed(() => store.state.user)
+    const type = ref('Breakfast')
 
     const isLoadedAll = ref(false)
     const state = reactive({
@@ -295,7 +296,7 @@ export default defineComponent({
       dialogVisible.value = true
       // add count
       itemInputNumber.value = 0
-      calcCart.value[route.query.type as string].some((k: ItemInfo) => {
+      calcCart.value[type.value].some((k: ItemInfo) => {
         if (k._id === state.dialogInfo._id) {
           itemInputNumber.value = k.count ? k.count : 0 
           return true
@@ -310,7 +311,7 @@ export default defineComponent({
         dialogVisible.value = false
         if (state.dialogInfo.count || itemInputNumber.value > 0) {
           store.dispatch('ASYNC_ADD_CART', {
-            type: route.query.type,
+            type: type.value,
             data: { ...state.dialogInfo, count: itemInputNumber.value }
           })
         }
@@ -335,7 +336,7 @@ export default defineComponent({
         cancel: true,
       }).onOk(() => {
         store.dispatch('ASYNC_DELETE_CART', {
-          type: route.query.type,
+          type: type.value,
           data: item
         })
       })
@@ -357,6 +358,8 @@ export default defineComponent({
       itemInputNumber,
       cartVisible,
       calcCart,
+      user,
+      type,
       handleDeleteCart
     }
   }

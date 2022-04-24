@@ -18,6 +18,19 @@
 
     <q-card flat :class="$q.dark.isActive ? 'bg-grey-8 q-ma-md' : 'bg-white q-ma-md'">
       <q-card-section>
+        <div class="text-overline">Three Major Nutrients</div>
+        <div
+            class="col-12"
+            :style="`height: 80px; 
+              width: ${containerRef ? containerRef.offsetWidth - 64 + 'px' : '100%'}`"
+          >
+          <v-chart :option="majorOption" ref="majorRef" />
+        </div>
+      </q-card-section>
+      </q-card>
+
+    <q-card flat :class="$q.dark.isActive ? 'bg-grey-8 q-ma-md' : 'bg-white q-ma-md'">
+      <q-card-section>
         <div class="text-overline">Nutrient Analysis</div>
         <q-tabs
           v-model="activeTab"
@@ -161,6 +174,75 @@ export default defineComponent({
       ]
     })
 
+    // three major nutrients
+    const major = computed(() => {
+      const res: any = []
+      const nutrientData: any = {}
+      for (let i of ['Breakfast', 'Lunch', 'Dinner']) {
+        calcCart.value[i].forEach((info: ItemInfo) => {
+          info.nutrition.forEach(item => {
+            // 3 major
+            if (item.name === 'Carbohydrate (mg)' || item.name === 'Fat (mg)' || item.name === 'Protein (mg)') {
+              if (!nutrientData[item.name]) nutrientData[item.name] = 0
+              nutrientData[item.name] += Math.floor(item.value * info.count)
+            }
+          })
+        })
+      }
+      for (let i of Object.keys(nutrientData)) {
+        res.push({
+          name: i,
+          type: 'bar',
+          stack: 'total',
+          label: {
+            show: true
+          },
+          barWidth: 30,
+          data: [nutrientData[i]],
+          itemStyle: {
+            barBorderRadius: [0, 0, 0, 0]
+          }
+        })
+      }
+
+      if (res[0]) {
+        res[0].itemStyle.barBorderRadius[0] = 20
+        res[0].itemStyle.barBorderRadius[3] = 20
+      }
+      if (res.length > 0) {
+        res[res.length - 1].itemStyle.barBorderRadius[1] = 20
+        res[res.length - 1].itemStyle.barBorderRadius[2] = 20
+      }
+      
+      return res
+    })
+
+    const majorRef = ref()
+    const majorOption = reactive({
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          // Use axis to trigger tooltip
+          type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
+        }
+      },
+      legend: {
+        bottom: '0'
+      },
+      grid: {
+        top: '35%'
+      },
+      xAxis: {
+        show: false,
+        max: 'dataMax'
+      },
+      yAxis: {
+        data: ['Three Major Nutrients'],
+        show: false
+      },
+      series: major.value
+    })
+
     // tabs
     const activeTab = ref('radar')
 
@@ -172,8 +254,11 @@ export default defineComponent({
       for (let i of ['Breakfast', 'Lunch', 'Dinner']) {
         calcCart.value[i].forEach((info: ItemInfo) => {
           info.nutrition.forEach(item => {
-            if (!nutrientData[item.name]) nutrientData[item.name] = 0
-            nutrientData[item.name] += item.value * info.count
+            // not 3 major
+            if (item.name !== 'Carbohydrate (mg)' && item.name !== 'Fat (mg)' && item.name !== 'Protein (mg)') {
+              if (!nutrientData[item.name]) nutrientData[item.name] = 0
+              nutrientData[item.name] += item.value * info.count
+            }
           })
         })
       }
@@ -181,12 +266,13 @@ export default defineComponent({
         res.push({ name: key, value: nutrientData[key] })
       }
       data.data = res.sort((a, b) => b.value - a.value)
-      data.topTenValue = []
+      data.max = data.data[0] ? data.data[0].value : 0
+      data.topTenValue = [] // top 6
       data.indicator = []
-      for (let i = 0; i < Math.min(10, data.data.length); i++) {
+      for (let i = 0; i < Math.min(6, data.data.length); i++) {
         data.topTenValue.push(data.data[i].value.toFixed(1))
         // todo: the max?
-        data.indicator.push({ name: data.data[i].name, max: Math.ceil((data.data[i].value + 10) / 10) * 10 })
+        data.indicator.push({ name: data.data[i].name, max: Math.ceil((data.max + 10) / 10) * 10 })
       }
       return data
     })
@@ -199,12 +285,13 @@ export default defineComponent({
         indicator: nutrient.value.indicator
       },
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        position: 'top'
       },
       series: [
         {
-          name: 'Budget vs spending',
           type: 'radar',
+          name: 'nutrient',
           data: [
             {
               value: nutrient.value.topTenValue,
@@ -223,8 +310,10 @@ export default defineComponent({
         if (calorieRef && calorieRef.value) {
           calorieRef.value.resize()
         }
+        if (majorRef && majorRef.value) {
+          majorRef.value.resize()
+        }
         if (nutrientRef && nutrientRef.value) {
-          // calorieRef.value.resize()
           nutrientRef.value.resize()
         }
       }, 500)
@@ -240,6 +329,9 @@ export default defineComponent({
       meals,
       caloriesOption,
       calorieRef,
+      major,
+      majorRef,
+      majorOption,
       activeTab,
       nutrient,
       nutrientOption,

@@ -46,7 +46,7 @@
             <div class="row">
               <div class="col-12 text-right text-caption">
                 In order to get more accurate data, click 
-                <a class="calc-link text-light-green-8">here</a>
+                <a class="calc-link text-light-green-8" @click="handleClickUser">here</a>
                 to set your basic information
               </div>
             </div>
@@ -123,8 +123,7 @@
                         {{ item.count + ' min'}}
                       </q-item-label>
                       <q-item-label caption>
-                        <!-- todo -->
-                        <span class="text-light-green-6">{{ Math.floor(item.calorie * item.count) + ' ' }}</span>kcal
+                        <span class="text-light-green-6">{{ Math.floor(item.calorie * item.count * user.basicInfo.weight) + ' ' }}</span>kcal
                       </q-item-label>
                     </q-item-section>
                   </q-item>
@@ -181,6 +180,10 @@ export default defineComponent({
     const router = useRouter()
 
     const calcCart = computed(() => store.state.calcCart)
+    const user = computed(() => store.state.user)
+    // target calories
+    const target = computed(() => store.getters.getCalorieBudget)
+
     // intake & consumption
     const intake = computed(() => {
       let res = 0
@@ -195,25 +198,29 @@ export default defineComponent({
     const consumption = computed(() => {
       let res = 0
       calcCart.value.Sport.forEach((info: ItemInfo) => {
-        // todo
-        res += Math.floor(info.calorie * info.count)
+        res += Math.floor(info.calorie * info.count * user.value.basicInfo.weight)
       })
       return res
     })
 
-    // target calories
-    const target = ref(1000)
     // click Diet Analysis button
     const handleClickDietAnalysis = () => {
       router.push({ path: '/calc-analysis' })
     }
 
+    // go user page
+    const handleClickUser = () => {
+      router.push({ path: '/user' })
+    }
+
     return {
       calcCart,
+      user,
       intake,
       consumption,
       target,
-      handleClickDietAnalysis
+      handleClickDietAnalysis,
+      handleClickUser
     }
   }
 })

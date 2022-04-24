@@ -23,7 +23,7 @@
     <q-card flat :class="$q.dark.isActive ? 'bg-grey-8 q-ma-md' : 'bg-white q-ma-md'">
       <q-card-section>
         <div class="text-overline">Our Team</div>
-        <div class="row justify-center items-center q-mx-xl">
+        <div class="row justify-center items-center">
           <div v-for="member in teamInfo" :key="member.name" class="col-4 col-md-2 text-center q-my-sm">
             <q-avatar :color="member.color" text-color="white" size="60px">
               {{ member.avatar }}
@@ -50,10 +50,10 @@ export default defineComponent({
     return {
       teamInfo: [
         { name: 'Zhuo Chen', avatar: 'ZC', work: 'Developer', mail: 'zc13n21@soton.ac.uk', color: 'primary' },
-        { name: 'Zhuo Chen', avatar: 'ZC', work: 'Developer', mail: 'zc13n21@soton.ac.uk', color: 'light-green' },
-        { name: 'Zhuo Chen', avatar: 'ZC', work: 'Developer', mail: 'zc13n21@soton.ac.uk', color: 'lime' },
-        { name: 'Zhuo Chen', avatar: 'ZC', work: 'Developer', mail: 'zc13n21@soton.ac.uk', color: 'green' },
-        { name: 'Zhuo Chen', avatar: 'ZC', work: 'Developer', mail: 'zc13n21@soton.ac.uk', color: 'green-8' }
+        { name: 'Haoran Yang', avatar: 'HY', work: 'UX designer', mail: 'hy10n21@soton.ac.uk', color: 'light-green' },
+        { name: 'Yichen Li', avatar: 'YL', work: 'UX designer', mail: 'yl36g21@soton.ac.uk', color: 'lime' },
+        { name: 'Qinchun Zhang', avatar: 'QZ', work: 'Researcher', mail: 'qz1n21@soton.ac.uk', color: 'green' },
+        { name: 'Xiao Cheng', avatar: 'XC', work: 'Researcher', mail: 'xc1u20@soton.ac.uk', color: 'green-8' }
       ]
     }
   }

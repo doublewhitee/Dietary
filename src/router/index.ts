@@ -6,10 +6,6 @@ const router = createRouter({
   history: createWebHistory(), // hash模式：createWebHashHistory，history模式：createWebHistory
   routes: [
     {
-      path: '/',
-      redirect: '/calc'
-    },
-    {
       path: '/calc',
       name: 'Calculator',
       component: () => import('@views/Calc.vue'),
@@ -25,9 +21,18 @@ const router = createRouter({
       component: () => import('@views/DietAnalysis.vue')
     },
     {
+      path: '/user',
+      name: 'User Info',
+      component: () => import('@views/User.vue'),
+    },
+    {
       path: '/about',
       name: 'About Us',
       component: () => import('@views/About.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/calc'
     }
   ]
 })

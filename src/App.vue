@@ -127,7 +127,7 @@ export default defineComponent({
         { icon: 'insights', text: 'Menu', path: '/calc' }
       ],
       otherLinks: [
-        { icon: 'person', text: 'User Info', path: '/about' },
+        { icon: 'person', text: 'User Info', path: '/user' },
         { icon: 'lightbulb', text: 'About Us', path: '/about' }
       ]
     }
