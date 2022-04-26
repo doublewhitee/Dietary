@@ -1,3 +1,5 @@
+import { Commit } from "vuex";
+
 interface State {
   isLogin: boolean
   userInfo: {
@@ -14,6 +16,13 @@ interface State {
   }
 }
 
+interface EditBaiscInfoPayload {
+  birthday: Date | string
+  height: number
+  weight: number
+  gender: 'male' | 'female'
+}
+
 const state: State = {
   isLogin: false,
   userInfo: {},
@@ -26,11 +35,15 @@ const state: State = {
 }
 
 const mutations = {
-
+  CHANGE_BASIC_INFO(state: State, payload: EditBaiscInfoPayload) {
+    state.basicInfo = { ...payload, birthday: new Date(payload.birthday) }
+  }
 }
 
 const actions = {
-
+  async ASYNC_CHANGE_BASIC_INFO({ commit }: { commit: Commit }, data: EditBaiscInfoPayload) {
+    commit('CHANGE_BASIC_INFO', data)
+  }
 }
 
 const getters = {
@@ -40,9 +53,9 @@ const getters = {
     const now = new Date()
     const age = Math.ceil(now.getFullYear() - state.basicInfo.birthday.getFullYear())
     if (state.basicInfo.gender === 'male') {
-      res = 66.5 + (13.75 * state.basicInfo.weight) + (5.003 * state.basicInfo.height) - (6.775 * age)
+      res = 1.2 * (66.5 + (13.75 * state.basicInfo.weight) + (5.003 * state.basicInfo.height) - (6.775 * age))
     } else {
-      res = 655.1 + (9.563 * state.basicInfo.weight) + (1.85 * state.basicInfo.height) - (4.676 * age)
+      res = 1.2 * (655.1 + (9.563 * state.basicInfo.weight) + (1.85 * state.basicInfo.height) - (4.676 * age))
     }
     return Math.floor(res)
   }

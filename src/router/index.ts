@@ -21,6 +21,16 @@ const router = createRouter({
       component: () => import('@views/DietAnalysis.vue')
     },
     {
+      path: '/category',
+      name: 'Category',
+      component: () => import('@views/Category.vue')
+    },
+    {
+      path: '/category-search',
+      name: 'Search',
+      component: () => import('@views/FoodList.vue')
+    },
+    {
       path: '/user',
       name: 'User Info',
       component: () => import('@views/User.vue'),
@@ -39,7 +49,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   nprogress.start()
-  document.title = to.name as string + ' | Project'
+  document.title = to.name as string + ' | Dietary'
   next()
 })
 

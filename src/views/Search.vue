@@ -80,11 +80,11 @@
   </div>
 
   <q-dialog v-model="dialogVisible">
-    <q-card  style="width: 500px; max-width: 80vw;">
+    <q-card style="width: 500px; max-width: 80vw;">
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">
           {{ state.dialogInfo.name }}
-          <q-badge align="middle" v-if="state.dialogInfo.category">
+          <q-badge v-if="state.dialogInfo.category">
             {{ state.dialogInfo.category.name }}
           </q-badge>
         </div>
@@ -101,15 +101,13 @@
           ref="dialogInputRef"
           v-model.number="itemInputNumber"
           outlined
-          min="0"
-          max="9999"
           mask="#"
           fill-mask="0"
           reverse-fill-mask
           :suffix="state.dialogInfo.unit ? state.dialogInfo.unit : 'min'"
           :rules="state.dialogInfo.unit ?
-            [ val => val < 9999 || 'The value must less than 10000'] :
-            [val => val < 999 || 'The value must less than 1000']"
+            [ val => val <= 9999 || 'The value must less than 10000'] :
+            [val => val <= 999 || 'The value must less than 1000']"
           style="width: 100%;"
         />
       </q-card-section>

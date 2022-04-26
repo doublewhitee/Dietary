@@ -82,7 +82,9 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <q-scroll-area class="App-page-scroll">
+        <router-view />
+      </q-scroll-area>
     </q-page-container>
   </q-layout>
 </template>
@@ -123,8 +125,9 @@ export default defineComponent({
       handleClickItem,
       mainLinks: [
         { icon: 'dashboard', text: 'Calorie Calculator', path: '/calc' },
-        { icon: 'web', text: 'Food Calorie Search', path: '/calc' },
-        { icon: 'insights', text: 'Menu', path: '/calc' }
+        { icon: 'web', text: 'Food Calorie Search', path: '/category' },
+        // todo
+        // { icon: 'insights', text: 'Menu', path: '/calc' }
       ],
       otherLinks: [
         { icon: 'person', text: 'User Info', path: '/user' },
@@ -142,6 +145,8 @@ export default defineComponent({
   &-logo
     height: 35px
     width: 35px
+  &-page-scroll
+    height: calc(100vh - 64px)
 
 ::selection
   background: $primary

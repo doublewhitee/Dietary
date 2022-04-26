@@ -6,4 +6,7 @@ router.prefix('/food')
 // get food list
 router.get('/info', food_controller.info)
 
+// get category list
+router.get('/cate', food_controller.category)
+
 module.exports = router

@@ -6,3 +6,9 @@ export function getFoodInfo(keyword: string, page: number, category?: string) {
     params: { keyword, page, category }
   })
 }
+
+export function getCategory() {
+  return request({
+    url: '/food/cate'
+  })
+}

@@ -176,7 +176,7 @@ export default defineComponent({
 
     // three major nutrients
     const major = computed(() => {
-      const res: any = []
+      const res = []
       const nutrientData: any = {}
       for (let i of ['Breakfast', 'Lunch', 'Dinner']) {
         calcCart.value[i].forEach((info: ItemInfo) => {
@@ -271,7 +271,7 @@ export default defineComponent({
       data.indicator = []
       for (let i = 0; i < Math.min(6, data.data.length); i++) {
         data.topTenValue.push(data.data[i].value.toFixed(1))
-        // todo: the max?
+        // radar max value
         data.indicator.push({ name: data.data[i].name, max: Math.ceil((data.max + 10) / 10) * 10 })
       }
       return data
