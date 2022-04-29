@@ -8,6 +8,7 @@ const url = 'mongodb://localhost:27017/calorie'
 const Category = require('../models/category')
 const Food = require('../models/food')
 const Sport = require('../models/sport')
+const Recommend = require('../models/recommend')
 
 // read File [Diet Nutritional Data]
 // insert Category func
@@ -79,9 +80,36 @@ const getSport = async () => {
       insertData.push({ name: i['Activity, Exercise or Sport'], calorie: i['Calories per kg per min'] })
     })
     await Sport.insertMany(insertData)
-    console.log('Sport inserted successfully!')
+    console.log('Recommend inserted successfully!')
   } catch (e) {
-    console.log('Sport insert error!')
+    console.log('Recommend insert error!')
+  }
+}
+
+// insert Recommend func
+const getRecommend = async () => {
+  try {
+    const res = await csv().fromFile(path.join(__dirname, '/data/Nutrient Reference Intake.csv'))
+    const insertData = []
+    res.forEach(i => {
+      const temp = { nutrition: [] }
+      for (let key of Object.keys(i)) {
+        if (key === 'minAge') {
+          temp[key] = i[key]
+        } else if (key === 'maxAge') {
+          temp[key] = i[key]
+        } else if (key === 'gender') {
+          temp[key] = i[key]
+        } else {
+          temp.nutrition.push({ name: key, value: i[key] })
+        }
+      }
+      insertData.push(temp)
+    })
+    await Recommend.insertMany(insertData)
+    console.log('Recommend inserted successfully!')
+  } catch (e) {
+    console.log('Recommend insert error!')
   }
 }
 
@@ -93,6 +121,7 @@ conn.on('open', async () => {
   await getCate()
   await getFood()
   await getSport()
+  await getRecommend()
   console.log('Done!')
   mongoose.disconnect()
 })

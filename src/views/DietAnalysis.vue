@@ -26,6 +26,21 @@
           >
           <v-chart :option="majorOption" ref="majorRef" />
         </div>
+        <div class="col-12 q-px-lg">
+          <div v-for="item in state.majorRecommend" :key="item._id" class="q-ma-md">
+            <div class="text-caption col-12 q-mb-sm">
+              <span class="text-weight-bold q-mr-md">{{ item.name }}</span>
+              {{ `${(item.value / 100).toFixed(2)}g, 
+              ${Math.floor(item.value / item.recommend * 100)}% of target (${(item.recommend / 100).toFixed(0)} g)` }}
+            </div>
+            <q-linear-progress
+              size="md"
+              rounded
+              :value="item.value / item.recommend"
+              :color="Math.floor(item.value / item.recommend * 100) > 100 ? 'orange' : 'primary'"
+            />
+          </div>
+        </div>
       </q-card-section>
       </q-card>
 
@@ -41,6 +56,7 @@
         >
           <q-tab name="radar" label="Radar" />
           <q-tab name="table" label="Table" />
+          <q-tab name="recommend" label="Recommend" />
         </q-tabs>
         <q-separator />
       </q-card-section>
@@ -56,7 +72,7 @@
             <v-chart :option="nutrientOption" ref="nutrientRef" />
           </div>
         </div>
-        <div v-else>
+        <div v-else-if="activeTab === 'table'">
           <q-table
             :columns="[
               {
@@ -81,6 +97,23 @@
             row-key="name"
           />
         </div>
+        <div v-else>
+          <div class="col-12 q-px-lg">
+            <div v-for="item in state.otherRecommend" :key="item._id" class="q-ma-md">
+              <div class="text-caption col-12 q-mb-sm">
+                <span class="text-weight-bold q-mr-md">{{ item.name }}</span>
+                {{ `${(item.value / 100).toFixed(2)}g, ${Math.floor(item.value / item.recommend * 100)}
+                % of target (${item.recommend >= 1000 ? (item.recommend / 100).toFixed(0) + ' g' : item.recommend + ' mg'})` }}
+              </div>
+              <q-linear-progress
+                size="md"
+                rounded
+                :value="item.value / item.recommend"
+                :color="Math.floor(item.value / item.recommend * 100) > 100 ? 'orange' : 'primary'"
+              />
+            </div>
+          </div>
+        </div>
       </q-card-section>
     </q-card>
 
@@ -92,7 +125,9 @@
 import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { throttle } from 'quasar'
+import { throttle, useQuasar } from 'quasar'
+
+import { getRecommendInfo } from '../request/recommend'
 
 interface ItemInfo {
   _id: string
@@ -110,18 +145,65 @@ interface ItemInfo {
   }[]
 }
 
+interface Recommend {
+  _id: string
+  name: string
+  recommend: number
+  value: number
+}
+
 export default defineComponent({
   name: 'DietAnalysis',
   setup() {
     const store = useStore()
     const router = useRouter()
+    const $q = useQuasar()
     const calcCart = computed(() => store.state.calcCart)
+    const user = computed(() => store.state.user)
 
     // mounted
-    onMounted(() => {
+    onMounted(async () => {
       if (calcCart.value.Breakfast.length === 0 && calcCart.value.Lunch.length === 0 && calcCart.value.Dinner.length === 0) {
         router.go(-1)
+      } else {
+        const now = new Date()
+        const age = Math.ceil(now.getFullYear() - user.value.basicInfo.birthday.getFullYear())
+        const { data } = await getRecommendInfo(age, user.value.basicInfo.gender)
+        // recommend info length should be 1
+        if (data.length === 1) {
+          const info = data[0].nutrition
+          const majorData = major.value
+          const nutrientData = nutrient.value.data
+          for (let i = 0; i < info.length; i++) {
+            if (info[i].name === 'Fat (mg)' || info[i].name === 'Protein (mg)' || info[i].name === 'Carbohydrate (mg)') {
+              state.majorRecommend.push({ _id: info[i]._id, name: info[i].name, recommend: info[i].value, value: majorData[i].data[0] })
+            } else {
+              state.otherRecommend.push({ _id: info[i]._id, name: info[i].name, recommend: info[i].value, value: 0 })
+              // find nutrient
+              nutrientData.some((k: any) => {
+                if (k.name === info[i].name) {
+                  state.otherRecommend[state.otherRecommend.length - 1].value = k.value
+                  return true
+                }
+                return false
+              })
+            }
+          }
+          // sort
+          state.otherRecommend.sort((a, b) => Math.floor(b.value / b.recommend * 100) - Math.floor(a.value / a.recommend * 100))
+        } else {
+          $q.notify({
+            message: 'Get recommendation data error!',
+            position: 'top'
+          })
+        }
       }
+    })
+
+    // recommend data
+    const state = reactive({
+      majorRecommend: [] as Recommend[],
+      otherRecommend: [] as Recommend[]
     })
 
     // container ref
@@ -326,6 +408,7 @@ export default defineComponent({
 
     return {
       containerRef,
+      state,
       meals,
       caloriesOption,
       calorieRef,
