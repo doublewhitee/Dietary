@@ -29,7 +29,7 @@
         <div class="col-12 q-px-lg">
           <div v-for="item in state.majorRecommend" :key="item._id" class="q-ma-md">
             <div class="text-caption col-12 q-mb-sm">
-              <span class="text-weight-bold q-mr-md">{{ item.name }}</span>
+              <span class="text-weight-bold q-mr-md">{{ item.name.substring(0, item.name.length - 5) }}</span>
               {{ `${(item.value / 100).toFixed(2)}g, 
               ${Math.floor(item.value / item.recommend * 100)}% of target (${(item.recommend / 100).toFixed(0)} g)` }}
             </div>
@@ -56,7 +56,7 @@
         >
           <q-tab name="radar" label="Radar" />
           <q-tab name="table" label="Table" />
-          <q-tab name="recommend" label="Recommend" />
+          <q-tab name="analysis" label="Analysis" />
         </q-tabs>
         <q-separator />
       </q-card-section>
@@ -97,13 +97,14 @@
             row-key="name"
           />
         </div>
+
         <div v-else>
           <div class="col-12 q-px-lg">
             <div v-for="item in state.otherRecommend" :key="item._id" class="q-ma-md">
               <div class="text-caption col-12 q-mb-sm">
-                <span class="text-weight-bold q-mr-md">{{ item.name }}</span>
-                {{ `${(item.value / 100).toFixed(2)}g, ${Math.floor(item.value / item.recommend * 100)}
-                % of target (${item.recommend >= 1000 ? (item.recommend / 100).toFixed(0) + ' g' : item.recommend + ' mg'})` }}
+                <span class="text-weight-bold q-mr-md">{{ item.name.substring(0, item.name.length - 5) }}</span>
+                {{ `${item.recommend >= 1000 ? (item.value / 100).toFixed(2) + ' g' : item.value.toFixed(2) + ' mg'}, ${Math.floor(item.value / item.recommend * 100)}% 
+                of target (${item.recommend >= 1000 ? (item.recommend / 100).toFixed(0) + ' g' : item.recommend + ' mg'})` }}
               </div>
               <q-linear-progress
                 size="md"

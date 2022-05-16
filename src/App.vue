@@ -126,8 +126,6 @@ export default defineComponent({
       mainLinks: [
         { icon: 'dashboard', text: 'Calorie Calculator', path: '/calc' },
         { icon: 'web', text: 'Food Nutrients Search', path: '/category' },
-        // todo
-        // { icon: 'insights', text: 'Menu', path: '/calc' }
       ],
       otherLinks: [
         { icon: 'person', text: 'User Info', path: '/user' },
