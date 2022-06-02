@@ -1,16 +1,65 @@
-# Vue 3 + TypeScript + Vite
+# Dietary
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+**Dietary** is an open data driven application for calorie calculation and diet analysis.
 
-## Recommended IDE Setup
+Our project can also be accessed [here](https://dietaryy.herokuapp.com/).
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+## Tech stack
 
-## Type Support For `.vue` Imports in TS
+The frontend of this project uses vue 3.0 + typescript + quasar + vuex + vue-router + axios + vite, and the backend is implemented by koa2.js, and the database uses MongoDB.
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
++ **vue3.0**: a JavaScript framework for building user interfaces
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
++ **quasar**: UI component framework
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
++ **echarts & vue-echarts**: draw charts
+
++ **sass**: CSS extension language
+
++ **mongoose**: an Object Data Modeling (ODM) library for MongoDB and Node.js
+
+## Installation
+
+```bash
+# frontend
+# install dependencies
+yarn # or npm i
+# start a dev server
+yarn start
+# build
+yarn build
+
+# backend
+cd server
+# install dependencies
+yarn # or npm i
+# insert data into database
+node ./script/index.js # our datasets are in ./script/data
+yarn dev
+```
+
+## Features
+
++ **Calorie Calculator**: calculate the user's intake and comsumption value of calorie
+
++ **Diet Analysis**: analyse user's diets using visualisations. Including Calories Analysis, Three Major Nutrients, Nutrient Analysis.
+
++ **Food Nutrients Search**: search the food nutrition information
+
++ **User Info Edit**: edit user basic information (for calculating the value of **calorie budget**)
+
++ **Mode**: the light / dark mode
+
+## Screenshots
+
+on PC
+
+<img title="" src="https://github.com/doublewhitee/Dietary/blob/main/screenshot/pc_1.PNG?raw=true" alt="img" data-align="inline" width="432">
+
+on Mobile (light / dark mode)
+
+<img title="" src="https://github.com/doublewhitee/Dietary/blob/main/screenshot/mobile_1.PNG?raw=true" alt="img" width="130" data-align="inline">     <img src="https://github.com/doublewhitee/Dietary/blob/main/screenshot/mobile_2.PNG?raw=true" title="" alt="img" width="130">
+
+Diet Analysis & Food Nutrients Search
+
+<img title="" src="https://github.com/doublewhitee/Dietary/blob/main/screenshot/mobile_3.PNG?raw=true" alt="img" width="130" data-align="inline">     <img src="https://github.com/doublewhitee/Dietary/blob/main/screenshot/mobile_4.PNG?raw=truee" title="" alt="img" width="130">
